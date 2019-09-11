@@ -1,0 +1,76 @@
+{
+  "name": "preact-ts-parcel",
+  "version": "1.2.0",
+  "description": "Preact + Typescript + Parcel Starter",
+  "scripts": {
+    "start": "yarn clean && yarn copy-static && yarn watch:all",
+    "build": "yarn clean && yarn build:all && yarn copy-static",
+    "build:all": "yarn build:background & yarn build:contentscript & yarn build:popup",
+    "build:contentscript": "parcel build src/contentscript.ts -o contentscript.js",
+    "build:devtool": "parcel build src/devtools-background.ts -o devtools-background.js",
+    "build:background": "parcel build src/background.ts -o background.js",
+    "build:popup": "parcel build src/popup.tsx -o popup.js --public-url='/'",
+    "watch:all": "yarn watch:index & yarn watch:background & yarn watch:contentscript & yarn watch:popup & yarn watch:devtool & npm-watch",
+    "watch:index": "parcel watch src/network.html -o network.html --hmr-hostname localhost",
+    "watch:contentscript": "parcel watch src/contentscript.ts -o contentscript.js --hmr-hostname localhost",
+    "watch:devtool": "parcel watch src/devtools-background.ts -o devtools-background.js --hmr-hostname localhost",
+    "watch:background": "parcel watch src/background.ts -o background.js --hmr-hostname localhost",
+    "watch:popup": "parcel watch src/popup.tsx -o popup.js --public-url='/' --hmr-hostname localhost",
+    "copy-static": "cp -r static/ dist/",
+    "clean": "rm -rf dist",
+    "test": "jest --verbose",
+    "lint": "lynt src/**/*.js --ignore tests/**/*.* --typescript --react"
+  },
+  "watch": {
+    "copy-static": {
+      "patterns": [
+        "static"
+      ],
+      "extensions": "*",
+      "quiet": false
+    }
+  },
+  "keywords": [
+    "Typescript",
+    "Preact",
+    "Parcel"
+  ],
+  "author": "Albert Alises",
+  "license": "MIT",
+  "dependencies": {
+    "preact": "^8.3.0",
+    "preact-bind-group": "^2.0.3",
+    "redux-zero": "^4.13.0"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.88",
+    "@types/jest": "^23.3.1",
+    "@types/node": "^12.7.4",
+    "@types/parcel-env": "0.0.0",
+    "husky": "^3.0.5",
+    "jest": "^23.4.2",
+    "lint-staged": "^9.2.5",
+    "lynt": "^0.3.1",
+    "npm-watch": "^0.6.0",
+    "parcel-bundler": "^1.9.7",
+    "postcss-modules": "^1.4.1",
+    "prettier": "^1.14.2",
+    "puppeteer": "^1.6.2",
+    "ts-jest": "^22.4.1",
+    "typescript": "^2.9.2"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  }
+}
